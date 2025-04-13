@@ -111,7 +111,7 @@
     border-radius: 10px;
     /* background-image: url(bg_image.jpg);
     background-size: cover; */
-    background: #f4d2d2;
+    background: whitesmoke;
     margin: 5px;
 }
 
@@ -129,17 +129,22 @@
     color: #0d20ed;
     text-align: center;
     font-weight: bold;
-    text-decoration: underline;
 }
 @media only screen and (max-width: 480px) {
     .clinic_name_in_output{
-        font-size: 20px;
+        font-size: 15px;
     }
 }
 
 .logo_images_in_heading{
-    width: 38px;
-    height: 43px;
+    width: 80px;
+    height: 80px;
+}
+@media only screen and (max-width: 480px) {
+    .logo_images_in_heading{
+        width: 30px;
+        height: 30px;
+    }
 }
 
 .address{
