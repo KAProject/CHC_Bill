@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Chetan Health Clinic Bill</title>
+  </head>
+  <body>
+
+    <!-- Input for Bill -->
+    <div id="section_input">
+        <h1 class="clinic_name_in_input">Chetan Health Clinic</h1>
+        <h2 class="statement1">Enter patient detailes below ↓</h2>
+        <div class="patient_detailes">
+            <label for="date" class="label_text">Select Date:</label><br>
+            <input type="date" id="date" name="date"><br><br>
+            <label for="time" class="label_text">Select Time:</label><br>
+            <input type="time" id="time" name="time"><br><br>
+            <label for="bill_no" class="label_text">Bill number:</label><br>
+            <input type="number" id="bill_no" name="bill" placeholder="Enter Bill number"><br><br>
+            <label for="name" class="label_text">Patient name:</label><br>
+            <input type="text" id="name" name="name" placeholder="Enter Patient name"><br><br>
+            <label for="age" class="label_text">Age:</label><br>
+            <input type="number" id="age" name="age" placeholder="Enter Patient age"><br><br>
+            <label for="ph_no" class="label_text">Phone no:</label><br>
+            <input type="number" id="ph_no" name="ph_no" placeholder="Enter phone no"><br><br>
+            <label for="gender" class="label_text">Gender:</label><br>
+            <form id="gender">
+              <input type="radio" name="gender" value="Male" id="male"><span class="label_text"> Male</span><br>
+              <input type="radio" name="gender" value="Femele" id="female"><span class="label_text"> Female</span><br>
+            </form>
+        </div><hr class="line">
+        <h2 class="statement1">Enter treatment detailes below ↓</h2>
+        <div class="treatment_detailes">
+            <table id="inputTable" border="1">
+                <tr>
+                    <th>Treatment</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                </tr>
+            </table><br>
+            <button class="buttons btn-hover color-9" onclick="addRow()">Add New Row <i class="fa-solid fa-plus"></i></button>
+        </div>
+        <button class="buttons btn-hover color-9" onclick="showSections(); displayContent(); calculateGrandTotal();">View Bill</button>
+    </div>
+
+    <!-- Bill output -->
+    <div class="output_bill" id="section_bill">
+      <div class="output_head d-flex flex-align-items-center">
+        <div class="heading_section d-flex flex-align-items-center flex-align-items-space-between">
+          <div>
+            <img class="logo_images_in_heading" src="snake_logo.png" alt="image">
+          </div>
+          <div>
+            <span class="clinic_name_in_output">CHETAN HEALTH CLINIC</span>
+          </div>
+          <div>
+            <img class="logo_images_in_heading" src="chc_logo.png" alt="image">
+          </div>
+        </div>
+        <P class="address">Shop No3, Katigenahalli Ramanna Complex, N Nagenhalli Main Road, Dr SRK Nagar Post, K Narayanpura Banglore 560077 </P>
+        <p class="address">Dr.ATMANAND S HIREMATH (Dr ANAND) MBBS,MD(AM),CMS&ED,CCH,CGO <br>General Physician <br>(9663601034) <br><span style="color: #0d20ed;">KPME REG: BLU03534ALHL2</span></p>
+      </div>
+      <div class="patient_detailes_output">
+        <div class="line1 d-flex flex-direction-row">
+          <div class="line1 d-flex flex-direction-row">
+            <h2 class="output_text">Date : </h2>&nbsp;<div class="output_values" id="displaydate"></div>
+          </div>
+          <div class="line1 d-flex flex-direction-row">
+            <h2 class="output_text">Time : </h2>&nbsp;<div class="output_values" id="displaytime"></div>
+          </div>
+          <div class="line1 d-flex flex-direction-row">
+            <h2 class="output_text">Bill No : </h2>&nbsp;<div class="output_values" id="displaybill_no"></div>
+          </div>
+        </div>
+        <div class="line2 d-flex flex-direction-row">
+          <h2 class="output_text">Patient Name : </h2>&nbsp;<div class="output_values" id="displayname"></div>
+        </div>
+        <div class="line3 d-flex flex-direction-row">
+          <div class="line3 d-flex flex-direction-row">
+            <h2 class="output_text">Age : </h2>&nbsp;<div class="output_values" id="displayage"></div>
+          </div>
+          <div class="line3 d-flex flex-direction-row">
+            <h2 class="output_text">Gender : </h2>&nbsp;<div class="output_values" id="displaygender"></div>
+          </div>
+        </div>
+        <div class="line2 d-flex flex-direction-row">
+          <h2 class="output_text">Phone no : </h2>&nbsp;<div class="output_values" id="displayph_no"></div>
+        </div>
+        <hr>
+      </div>
+      <div class="treatment_detailes_output">
+        <table id="displayTable" border="1">
+            <tr>
+                <th>Treatment</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+            </tr>
+        </table><br>
+        <h3 id="grandTotalDisplay">Grand Total: ₹0</h3>
+        <div class="g_w_s">
+          <!-- <p>Get Well Soon</p> -->
+           <img src="g_w_s.png" alt="Get Well Soon">
+        </div>
+      </div>
+      <div class="images">
+        <img src="QR_code_.png" alt="QR_code">
+        <img src="Stamp.png" alt="Signature">
+      </div>
+    </div>
+    <div id="section_back_button">
+      <button class="buttons btn-hover color-9" onclick="display('section_input')">Back <i class="fa-solid fa-backward"></i> </button>
+      <button class="buttons btn-hover color-9" onclick="downloadAsImage()">Download <i class="fa-solid fa-download"></i> </button>
+      <!-- <button onclick="downloadAsPDF()">Download as PDF</button> -->
+    </div>
+    
+    
+
+
+    <script src="script.js"></script>
+    <script type="text/javascript" src="https://d1tgh8fmlzexmh.cloudfront.net/ccbp-static-website/js/ccbp-ui-kit.js"></script>
+  </body>
+</html>  
