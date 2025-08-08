@@ -31,6 +31,12 @@ function showSections() {
     document.getElementById("section_back_button").style.display = "block";
 }
 
+function go_back() {
+    document.getElementById("section_input").style.display = "block";
+    document.getElementById("section_bill").style.display = "none";
+    document.getElementById("section_back_button").style.display = "none";
+}
+
 function downloadAsImage() {
     const table = document.getElementById("section_bill");
     html2canvas(table).then(canvas => {
